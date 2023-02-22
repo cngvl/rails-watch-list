@@ -1,5 +1,9 @@
 <h1>List index found at: app/views/lists/index.html.erb</h1>
 
-<% @lists.each do |list| %>
-<p><%= link_to list.name, list_path(list) %></p>
-<% end %>
+<ul>
+  <% @lists.each do |list| %>
+    <li><%= link_to list.name, list_path(list) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Create a new list', new_list_path %>
