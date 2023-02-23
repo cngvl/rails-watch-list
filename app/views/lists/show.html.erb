@@ -1,9 +1,22 @@
 <h1>Show html found at: app/views/lists/show.html.erb</h1>
 
+
+<%= cl_image_tag @list.photo.key, height: 300, width: 400, crop: :fill %>
+
+
 <ul>
-<% @list.movies.each do |movie| %>
-<li><%= movie.title %></li>
-<% end %>
+  <% @list.movies.each do |movie| %>
+   <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+    <li><strong><%= movie.title %></strong></li>
+    <%= movie.overview %>
+    <%= movie.rating %>
+    <%= bookmark.comment %> <br>
+    <%# raise %>
+    <%= image_tag(movie.poster_url, width: "100")  %> <br>
+
+    <%= link_to "destroy this movie", bookmark_path(bookmark), data: { turbo_method: :delete } %>
+  <% end %>
 </ul>
 
-<%= link_to 'add movies to this list', new_list_bookmark_path(@list) %>
+<%= link_to 'add a movie to this list', new_list_bookmark_path(@list) %> <br>
+<%= link_to 'go back and see all lists ', lists_path %>

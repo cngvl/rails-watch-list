@@ -1,26 +1,34 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+require 'open-uri'
+require 'nokogiri'
 
-puts "Cleaning database"
+html_file = URI.open('https://tmdb.lewagon.com/movie/top_rated').read
+html_doc = JSON.parse(html_file)
+
+puts 'Cleaning database'
 Bookmark.destroy_all
 List.destroy_all
 Movie.destroy_all
-puts "Creating flats"
+puts 'Creating flats'
 
-10.times do
-  p movie_name = Faker::Movie.unique.title
+html_doc['results'].each do |element|
   Movie.create!(
-    title: movie_name,
-    overview: Faker::Movie.unique.quote,
-    poster_url: "https://unsplash.com/s/photos/#{movie_name}",
-    rating: rand(1..10)
+    title: element['title'],
+    overview: element['overview'],
+    poster_url: "https://image.tmdb.org/t/p/w500/#{element['poster_path']}",
+    rating: element['vote_average']
   )
 end
 
 5.times do
-  List.create!(
-    name: Faker::Book.unique.genre
+  list_name = Faker::Book.unique.genre
+  list = List.new(
+    name: list_name
   )
+  list.photo.attach(io: URI.open("https://source.unsplash.com/1600x900/?#{Faker::Book.unique.genre}"), filename: "#{list_name}.png", content_type: 'image/png');
+  # p list.photo.attached?
+  list.save!
 end
 
 Movie.all.each do |movie|
