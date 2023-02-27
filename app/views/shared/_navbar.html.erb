@@ -1,0 +1,11 @@
+<div class="flex justify-between items-center border-b-2 border-slate-200 px-4 py-4">
+  <%# Left side navbar %>
+  <div class="">
+    <div class="">rails watch list</div>
+  </div>
+  <%# Right side of navbar %>
+  <div class="flex items-center">
+    <div class="px-4 hover:font-semibold"><%= link_to 'see all lists ', lists_path %></div>
+    <div class="hover:font-semibold"><%= link_to 'create a new list', new_list_path %></div>
+  </div>
+</div>

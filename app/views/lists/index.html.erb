@@ -1,11 +1,27 @@
-<h1>List index found at: app/views/lists/index.html.erb</h1>
+<%= render 'components/header', text: 'List of movies' %>
 
+<div class="container-sm mx-auto border-2 border-solid border-red-600">
+  <div class="border-2 border-solid border-orange-600">
 
-<ul>
-  <% @lists.each do |list| %>
-  <%= cl_image_tag list.photo.key, height: 300, width: 400, crop: :fill %>
-    <li><%= link_to list.name, list_path(list) %></li>
-  <% end %>
-</ul>
+    <% counter = 1 %>
+      <% @lists.each do |list| %>
+        <div class="border-2 border-solid border-yellow-600 text-center rounded-lg flex items-center justify-start item-stretch m-2 p-2">
+          <div id= "list-number" class="flex justify-center border-2 border-solid border-green-600 w-16 h-16 items-center">
+            <span class="inline-block align-middle">
+              <%= counter %>
+              <% counter += 1 %>
+            </span>
+          </div>
+          <div id="list-image" class="border-2 border-solid border-blue-600 object-fill justify-self-">
+            <%= cl_image_tag list.photo.key, height: 100, crop: :fill %>
+          </div>
+          <div id="list-title" class="border-2 border-solid border-indigo-600">
+            <%= link_to list.name, list_path(list) %>
+          </div>
+        </div>
+      <% end %>
 
-<%= link_to 'Create a new list', new_list_path %>
+  </div>
+</div>
+
+<%# Need to make the whole div clickable? %>

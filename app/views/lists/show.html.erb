@@ -1,8 +1,8 @@
-<h1>Show html found at: app/views/lists/show.html.erb</h1>
+<%# This is the app/views/lists/show.html.erb %>
 
+<%= render 'components/header', text: @list.name %>
 
 <%= cl_image_tag @list.photo.key, height: 300, width: 400, crop: :fill %>
-
 
 <ul>
   <% @list.movies.each do |movie| %>
@@ -11,7 +11,6 @@
     <%= movie.overview %>
     <%= movie.rating %>
     <%= bookmark.comment %> <br>
-    <%# raise %>
     <%= image_tag(movie.poster_url, width: "100")  %> <br>
 
     <%= link_to "destroy this movie", bookmark_path(bookmark), data: { turbo_method: :delete } %>
